@@ -52,4 +52,23 @@ public class BinaryTree<T> {
 
         return commonParent;
     }
+    
+    Node<T> findClosestCommonParentOptimized(Node<T> root, Node<T> firstElement, Node<T> secondElement) {
+
+        if (root == null) return null;
+
+        // if one of elements is root, the answer is root
+        if (root == firstElement || root == secondElement) return root;
+
+
+        // otherwise, answer is either left or right
+        Node<T> left = findClosestCommonParentOptimized(root.getLeft(), firstElement, secondElement);
+        Node<T> right = findClosestCommonParentOptimized(root.getRight(), firstElement, secondElement);
+
+        // if elements are present in both subtrees, the answer is root
+        if (left != null && right != null) return root;
+
+        // if elements are present only in one subtree, the answer is in that subtree
+        return left != null ? left : right;
+    }
 }
